@@ -6,7 +6,10 @@ services:
 
   clickhouse:
     container_name: clickhouse
-    image: clickhouse/clickhouse-server:latest
+    image: custom-clickhouse:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.clickhouse
     env_file: .env
     ports:
       - 8123:8123
@@ -14,7 +17,6 @@ services:
     networks:
       - app-network
     volumes:
-      - ./scripts:/scripts
       - ./sparkdata:/var/lib/clickhouse/user_files/sparkdata
       - clickhouse_log:/var/log/clickhouse-server:rw
       - clickhouse_data:/var/lib/clickhouse:rw

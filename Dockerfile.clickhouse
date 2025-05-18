@@ -1,0 +1,5 @@
+FROM clickhouse/clickhouse-server:latest
+
+COPY scripts/seed_db.sh /scripts/seed_db.sh
+
+RUN chmod +x /scripts/seed_db.sh

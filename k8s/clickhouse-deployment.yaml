@@ -1,0 +1,75 @@
+# clickhouse-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clickhouse
+  namespace: spark-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clickhouse
+  template:
+    metadata:
+      labels:
+        app: clickhouse
+    spec:
+      containers:
+      - name: clickhouse
+        image: custom-clickhouse:latest
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: env-config
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            /entrypoint.sh &
+            
+            while ! clickhouse-client --query "SELECT 1"; do
+              sleep 1
+            done
+            
+            sed -i -e 's/\r$//' /scripts/seed_db.sh
+            /scripts/seed_db.sh
+            
+            wait
+        ports:
+        - containerPort: 8123
+          name: http
+        - containerPort: 9000
+          name: native
+        volumeMounts:
+        - name: sparkdata
+          mountPath: /var/lib/clickhouse/user_files/sparkdata
+        - name: clickhouse-log
+          mountPath: /var/log/clickhouse-server
+        - name: clickhouse-data
+          mountPath: /var/lib/clickhouse
+      volumes:
+      - name: sparkdata
+        hostPath:
+          path: /sparkdata
+          type: DirectoryOrCreate
+      - name: clickhouse-log
+        emptyDir: {}
+      - name: clickhouse-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clickhouse-service
+  namespace: spark-app
+spec:
+  selector:
+    app: clickhouse
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8123
+      targetPort: 8123
+    - name: native
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
