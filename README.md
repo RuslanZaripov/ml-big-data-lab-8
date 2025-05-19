@@ -6,7 +6,7 @@
 
 ## Stack
 
-- Scala, Cassandra, PySpark, Kubernetes
+- Scala, Python, Cassandra, PySpark, Kubernetes
 
 ## Project Structure
 
@@ -47,7 +47,8 @@
 └── static
     ├── Лабораторная работа 5 (весна 2025).pdf
     ├── Лабораторная работа 6 (весна 2025).pdf
-    └── Лабораторная работа 7 (весна 2025).pdf
+    ├── Лабораторная работа 7 (весна 2025).pdf
+    └── Лабораторная работа 8 (весна 2025).pdf
 ```
 
 ## Steps
@@ -68,7 +69,7 @@ docker build -t custom-clickhouse:latest -f ./Dockerfile.clickhouse .
 - Start minikube:
 
 ```bash
-start minikube
+minikube start
 ```
 
 - Load images into minikube:
@@ -122,18 +123,18 @@ kubectl apply -f ./k8s/clickhouse-deployment.yaml
 kubectl apply -f ./k8s/model-deployment.yaml
 ```
 
+- Check pods:
+
+```bash
+kubectl get pods -n spark-app
+```
+
 ## Additional
 
 - Deletes a local Kubernetes cluster. This command deletes the VM, and removes all associated files:
 
 ```bash
 minikube delete --all --purge
-```
-
-- Check pods:
-
-```bash
-kubectl get pods -n spark-app
 ```
 
 - Check services:
