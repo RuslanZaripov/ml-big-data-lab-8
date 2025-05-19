@@ -2,4 +2,5 @@ FROM clickhouse/clickhouse-server:latest
 
 COPY scripts/seed_db.sh /scripts/seed_db.sh
 
-RUN chmod +x /scripts/seed_db.sh
+RUN sed -i 's/\r$//' /scripts/seed_db.sh && \
+    chmod +x /scripts/seed_db.sh

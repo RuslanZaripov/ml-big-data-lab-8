@@ -3,7 +3,7 @@ import sys
 import argparse
 import configparser
 from logger import Logger
-from functools import reduce
+from dotenv import load_dotenv
 
 sys.path.append(os.environ['SPARK_HOME'] + '/python')
 sys.path.append(os.environ['SPARK_HOME']+ '/python/build')
@@ -32,11 +32,13 @@ class Clusterizer():
         
         self.TABLE = "openfoodfacts_proc"
         
-        IP_ADDRESS = self.config["clickhouse"]["clickhouse_ip_address"]
-        PORT = self.config["clickhouse"]["clickhouse_port"]
-        self.USER = self.config["clickhouse"]["clickhouse_user"]
-        self.PASSWORD = self.config["clickhouse"]["clickhouse_password"]
-        self.DATABASE = self.config["clickhouse"]["clickhouse_database"]
+        load_dotenv()
+        
+        IP_ADDRESS = os.environ["CLICKHOUSE_IP_ADDRESS"]
+        PORT = os.environ["CLICKHOUSE_PORT"]
+        self.USER = os.environ["CLICKHOUSE_USER"]
+        self.PASSWORD = os.environ["CLICKHOUSE_PASSWORD"]
+        self.DATABASE = os.environ["CLICKHOUSE_DATABASE"]
         
         self.numParitions = numParitions # from 1 to 100
         socket_timeout = 300000

@@ -9,6 +9,7 @@ ADD https://repo1.maven.org/maven2/com/clickhouse/spark/clickhouse-spark-runtime
 ADD https://repo1.maven.org/maven2/com/clickhouse/clickhouse-jdbc/0.8.5/clickhouse-jdbc-0.8.5-all.jar ${SPARK_JAR_PATH}
 
 COPY requirements.txt .
+COPY .env .
 COPY src ./src
 COPY conf ./conf
 
@@ -17,6 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY target/scala-2.12/assemblyApp.jar target/scala-2.12/
 
 COPY entrypoint.sh .
-RUN chmod +x /app/entrypoint.sh
+RUN sed -i 's/\r$//' /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]

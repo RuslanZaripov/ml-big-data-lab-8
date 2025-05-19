@@ -19,16 +19,9 @@ spec:
         imagePullPolicy: Never
         command: ["/bin/sh", "-c"]
         args:
-          - sed -i -e 's/\r$//' /app/entrypoint.sh &&
-            chmod +x /app/entrypoint.sh &&
-            sed -i 's/^clickhouse_ip_address = .*/clickhouse_ip_address = clickhouse-service.spark-app.svc.cluster.local/' ./conf/spark.ini &&
-            cat ./conf/spark.ini &&
-            /app/entrypoint.sh
+          - /app/entrypoint.sh
         ports:
         - containerPort: 4040
-        env:
-        - name: CLICKHOUSE_HOST
-          value: "clickhouse-service.spark-app.svc.cluster.local"
 ---
 apiVersion: v1
 kind: Service

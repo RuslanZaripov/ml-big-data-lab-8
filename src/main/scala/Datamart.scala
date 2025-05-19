@@ -11,6 +11,7 @@ object Datamart {
   private val logger = Logger.getLogger(getClass.getName)
 
   private val config_file_path = "conf/spark.ini"
+  private val env_file_path = ".env"
   private val driver = "com.clickhouse.jdbc.ClickHouseDriver"
   private val init_table_name = "openfoodfacts"
   private val proc_table_name = s"${init_table_name}_proc"
@@ -37,18 +38,18 @@ object Datamart {
   }
 
   private val clickhousePairs =
-    loadPropertiesFromFile(config_file_path, "clickhouse")
+    loadPropertiesFromFile(env_file_path, "CLICKHOUSE")
 
   private val clickhouseIpAddress =
-    clickhousePairs.get("clickhouse_ip_address").get
+    clickhousePairs.get("CLICKHOUSE_IP_ADDRESS").get
   private val clickhousePort =
-    clickhousePairs.get("clickhouse_port").get
+    clickhousePairs.get("CLICKHOUSE_PORT").get
   private val clickhouseDatabase =
-    clickhousePairs.get("clickhouse_database").get
+    clickhousePairs.get("CLICKHOUSE_DATABASE").get
   private val clickhouseUser =
-    clickhousePairs.get("clickhouse_user").get
+    clickhousePairs.get("CLICKHOUSE_USER").get
   private val clickhousePassword =
-    clickhousePairs.get("clickhouse_password").get
+    clickhousePairs.get("CLICKHOUSE_PASSWORD").get
 
   private def parseArgs(args: Array[String]): Set[String] = {
     args.map(_.toLowerCase).toSet

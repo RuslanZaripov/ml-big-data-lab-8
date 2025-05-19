@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "Waiting for ClickHouse to be ready..."
+while ! clickhouse-client --query "SELECT 1"; do
+  sleep 1
+done
+
 echo "Dropping table openfoodfacts if exists"
 clickhouse-client --progress --verbose --query="DROP TABLE IF EXISTS openfoodfacts"
 
