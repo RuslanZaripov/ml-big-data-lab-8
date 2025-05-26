@@ -16,6 +16,13 @@ spec:
       containers:
       - name: model
         image: zarus03/model:latest
+        resources:
+          requests:
+            cpu: "1300m"
+            memory: "2Gi"
+          limits:
+            cpu: "2000m"
+            memory: "4Gi"
         command: ["/bin/sh", "-c"]
         args:
           - /app/entrypoint.sh
