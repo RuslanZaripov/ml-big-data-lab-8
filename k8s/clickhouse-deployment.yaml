@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
       - name: clickhouse
-        image: custom-clickhouse:latest
-        imagePullPolicy: Never
+        image: zarus03/custom-clickhouse:latest
         envFrom:
         - configMapRef:
             name: env-config

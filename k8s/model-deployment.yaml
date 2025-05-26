@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
       - name: model
-        image: model:latest
-        imagePullPolicy: Never
+        image: zarus03/model:latest
         command: ["/bin/sh", "-c"]
         args:
           - /app/entrypoint.sh

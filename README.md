@@ -66,29 +66,24 @@ docker build -t model:latest .
 docker build -t custom-clickhouse:latest -f ./Dockerfile.clickhouse .
 ```
 
+- Push image to DockerHub:
+
+```bash
+# Log in to DockerHub (if not already logged in)
+docker login
+
+# Tag your local image with your DockerHub username
+docker tag model:latest zarus03/model:latest
+docker tag custom-clickhouse:latest zarus03/custom-clickhouse:latest
+
+docker push zarus03/model:latest
+docker push zarus03/custom-clickhouse:latest
+```
+
 - Start minikube:
 
 ```bash
 minikube start
-```
-
-- Load images into minikube:
-
-```bash
-minikube image load model:latest
-minikube image load custom-clickhouse:latest
-```
-
-- Verify that docker images loaded successfully:
-
-```bash
-minikube ssh docker images
-```
-
-- Attach to logs in case of exceptions:
-
-```bash
-minikube logs -f
 ```
 
 - Mount sparkdata directory:
@@ -135,6 +130,18 @@ kubectl get pods -n spark-app
 
 ```bash
 minikube delete --all --purge
+```
+
+- Attach to logs in case of exceptions:
+
+```bash
+minikube logs -f
+```
+
+- Verify that docker images loaded successfully:
+
+```bash
+minikube ssh docker images
 ```
 
 - Check services:
