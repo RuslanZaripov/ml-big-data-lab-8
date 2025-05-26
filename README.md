@@ -86,6 +86,18 @@ docker push zarus03/custom-clickhouse:latest
 minikube start
 ```
 
+- Enable metrics-server addon in minikube cluster:
+
+```bash
+minikube addons enable metrics-server
+```
+
+- Show resource usages:
+
+```bash
+kubectl top pod -n spark-app
+```
+
 - Mount sparkdata directory:
 
 ```bash
@@ -167,3 +179,7 @@ kubectl exec -it clickhouse-xxxx -n spark-app -- bash
 ```bash
 kubectl logs -f clickhouse-xxxx -n spark-app
 ```
+
+## Resources
+
+- [DockerHub](https://hub.docker.com/repositories/zarus03)
