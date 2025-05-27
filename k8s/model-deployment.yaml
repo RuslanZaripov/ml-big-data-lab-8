@@ -18,10 +18,10 @@ spec:
         image: zarus03/model:latest
         resources:
           requests:
-            cpu: "1300m"
+            cpu: "1"
             memory: "2Gi"
           limits:
-            cpu: "2000m"
+            cpu: "2"
             memory: "4Gi"
         command: ["/bin/sh", "-c"]
         args:
