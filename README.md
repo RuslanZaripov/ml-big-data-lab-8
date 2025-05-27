@@ -183,3 +183,4 @@ kubectl logs -f clickhouse-xxxx -n spark-app
 ## Resources
 
 - [DockerHub](https://hub.docker.com/repositories/zarus03)
+- [Отчет](./report/Отчет%20Лаб8.pdf)
